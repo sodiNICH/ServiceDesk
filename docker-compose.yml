@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  servicedesk:
+    build: .
+    container_name: servicedesk
+    command: >
+      sh -c "python manage.py makemigrations &&
+            python manage.py migrate &&
+            python manage.py test Tickets &&
+            python manage.py loaddata fixtures/users.json &&
+            python manage.py collectstatic --noinput &&
+            uvicorn config.asgi:application --host 0.0.0.0 --port 8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+    environment:
+      DATABASE_URL: postgres://servicedesk_user:123@db:5432/servicedesk
+      SECRET_KEY: "django-insecure--q3+6-ozyf^&77f%^#ii2k(bp*9z_+$g_7-8)zu%izur+qx3m1"
+      PASSWORD_EMAIL: "kchw srpz oijz rgpt"
+      EMAIL: "operatorservicedesk506@gmail.com"
+    volumes:
+      - static_volume:/app/staticfiles
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: servicedesk
+      POSTGRES_USER: servicedesk_user
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    container_name: db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  celery:
+    build:
+      context: .
+    command: sh -c "sleep 10 && celery -A config worker --loglevel=info"
+    depends_on:
+      - servicedesk
+      - redis
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      DATABASE_URL: postgres://servicedesk_user:123@db:5432/servicedesk
+      EMAIL: "operatorservicedesk506@gmail.com"
+      PASSWORD_EMAIL: "kchw srpz oijz rgpt"
+
+  celery-beat:
+    build: .
+    command: sh -c "sleep 10 && celery -A config beat --loglevel=info"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - servicedesk
+      - redis
+    environment:
+      DATABASE_URL: postgres://servicedesk_user:123@db:5432/servicedesk
+      EMAIL: "operatorservicedesk506@gmail.com"
+      PASSWORD_EMAIL: "kchw srpz oijz rgpt"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+
+volumes:
+  db_data:
+  static_volume:

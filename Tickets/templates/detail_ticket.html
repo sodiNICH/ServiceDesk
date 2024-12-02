@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/static/css/detail_ticket.css/">
+    <script src="/static/js/detail_ticket.js/"></script>
+</head>
+<body>
+    <a href="/tickets/">Обратно к списку обращений</a>
+    <h1>Детальный просмотр обращения</h1>
+
+    <div id="tickets-list">
+        <!-- Обращения будут загружены сюда -->
+    </div>
+
+    <div class="ticket-response">
+        <h4>Ответить на обращение</h4>
+        <textarea id="message-input" placeholder="Введите ваше сообщение" rows="4"></textarea><br>
+        <button id="send-message-btn">Отправить сообщение</button>
+    </div>
+
+    <div class="ticket-status">
+        <h4>Изменить статус обращения</h4>
+        <select id="status-select">
+            <option value="new">Новый</option>
+            <option value="in_process">В процессе</option>
+            <option value="closed">Завершён</option>
+        </select>
+    </div>
+</body>
+</html>

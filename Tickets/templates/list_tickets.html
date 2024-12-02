@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список обращений</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/list_tickets.js/"></script>
+    <link rel="stylesheet" href="/static/css/list_tickets.css/">
+</head>
+<body>
+    <h1>Список обращений</h1>
+    <div>
+        <label for="status">Фильтр по статусу:</label>
+        <select id="status">
+            <option value="">Все</option>
+            <option value="new">Новый</option>
+            <option value="in_process">В процессе</option>
+            <option value="closed">Решён</option>
+        </select>
+
+        <label for="ordering">Сортировка:</label>
+        <select id="ordering">
+            <option value="-created_at">По дате (убыв.)</option>
+            <option value="created_at">По дате (возр.)</option>
+        </select>
+
+        <button id="filter-btn">Применить</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Проблема</th>
+                <th>Статус</th>
+                <th>Дата создания</th>
+            </tr>
+        </thead>
+        <tbody id="tickets-list">
+            <!-- Список обращений будет загружен через AJAX -->
+        </tbody>
+    </table>
+</body>
+</html>

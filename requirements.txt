@@ -1,0 +1,12 @@
+django
+djangorestframework
+django_filter
+drf_yasg
+psycopg2-binary
+dj_database_url
+uvicorn
+celery
+bs4
+channels==3.0.4
+channels-redis==4.1.0
+websockets
