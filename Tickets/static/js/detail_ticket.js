@@ -116,7 +116,9 @@ $(document).ready(function () {
                 contentType: "application/json",
                 success: function (response) {
                     alert("Статус обращения успешно обновлен!");
-                    $(".ticket-response").remove();
+                    if (newStatus == "closed") {
+                        $(".ticket-response").remove();
+                    };
                 },
                 error: function (xhr) {
                     console.error("Ошибка при обновлении статуса обращения:", xhr.responseText);
